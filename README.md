@@ -1,2 +1,12 @@
-# WaveFunctionVisualization
-Wave funciton visualization in condensed matter systems. Use the Crank-Nicolson method to solve TDSE for various potentials: the Kronig-Penny model and 1d Anderson impurity model.
+## Python包安装
+需要安装以下python库：
+- numpy
+- scipy
+- websockets==11.0.2
+
+## 在运行网页之前，启动websocket服务
+```bash
+python server.py
+```
+
+## 打开网页

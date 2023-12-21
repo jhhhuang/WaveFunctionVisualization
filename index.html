@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>凝聚态系统中的波函数动态可视化</title>
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- echarts: plot -->
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+
+
+  <!-- Mathjex: tex formula -->
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['$$','$$']]},
+    });
+    </script>
+
+  <!-- math.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.6.0/math.js"></script>
+
+
+  <!-- numeric.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+</head>
+
+<body>
+  <div class="titlebox">
+    <h1 id="top">凝聚态系统中的波函数动态可视化</h1>
+    <h3>Dynamical Visualization of Wave Function in Condensed Matter Systems
+      <hr />
+    </h3>
+  </div>
+
+  <ol style="background-color: rgba(218, 218, 218, 0.301);width: 400px;border: solid blue;">
+    <h2 style="font-family: Palatino Linotype;line-height: 10px;" align="center"><br />Table of Contents</h2>
+    <li><a href="#KP">Kronig-Penney 模型</a></li>
+    <li><a href="#BWP">Bloch 波包</a></li>
+    <li><a href="#ANDERSON">Anderson 局域化</a></li>
+    <li><a href="#REF">参考文献</a></li>
+  </ol>
+
+  <h2 id="KP">Kronig-Penney 模型<a href="#top" style="font-size: 13px;">^回到目录^</a></h2>
+  <hr />
+  <p>
+    Kronig-Penney模型是一种周期性方势阱<a href="#REF">[1]</a>。因其与周期性排列的原子核的势场具有形式上的相似性，常被作为学习能带理论的 “toy model”。其势能可以写为
+
+    $$V(x)=V(x+a),\ V( x) =\begin{cases}
+    0,& 0
+    < x\leq L_{w}\\ U_{0},& L_{w} < x\leq a \end{cases}$$ 其中 $U_0$ 为势垒高度， $a$ 为元胞周期， $L_w=a\times
+      P_w$ 为势阱宽度， $P_w$ 为势垒间距比例。<br />
+
+  <ul>
+    <li>单击“绘制”，可以绘制出特定参数下Kronig-Penney模型所对应的能带结构。</li>
+    <li>
+      图中蓝色线对应能带，橙色线为入射电子能量。下面一节中，我们将看到，若电子能量处于禁带中，即使电子能量高于势垒，电子也无法进入Kronig-Penney势形成的一维晶格中；反之，即使电子能量低于势垒，若电子能量被能带允许，电子也能进入Kronig-Penney势形成的一维晶格。这是经典物理无法解释的。
+    </li>
+  </ul>
+  </p>
+
+
+  <div class="tools">
+    <div>
+      <span>$U_0$:</span>
+      <input type="text" id="U0" placeholder="范围 (10~30)" value="10" />
+
+      <span>$a$:</span>
+      <input type="text" id="a" placeholder="范围 (2~5)" value="2" />
+
+      <span>$P_w$:</span>
+      <input type="text" id="pw" placeholder="范围(0~1)" value="0.5" />
+
+      <span>$E_0$:</span>
+      <input type="text" id="E0" placeholder="范围(0.5*U0,1.5*U0)" value="11.0" />
+    </div>
+
+
+    <div>
+      <button id="plot-btn">绘制</button>
+    </div>
+  </div>
+
+  <div id="chart1" class="chart"></div>
+
+
+  <h2 id="BWP">Bloch 波包<a href="#top" style="font-size: 13px;">^回到目录^</a></h2>
+  <hr />
+  <p>
+
+    作为一个简单例子，我们先来研究一维电子波函数被Kronig- Penney势散射。<br />
+  <ul>
+    <li>单击“开始”按钮，程序将根据上一节中输入的参数模拟电子入射到Kronig-Penney势形成的一维晶格中。</li>
+    <li>当电子能量被能带允许时，电子将进入到一维晶格，并形成Bloch波包；反之若电子处于禁带，将无法进入一维晶格。</li>
+    <li>注意，在模拟中我们取反射边界条件。同时由于实际晶格大小有限，下图势能并不严格对应上一节中的能带结构。</li>
+  </ul>
+  </p>
+
+
+
+  <div class="tools">
+    <div>
+      <button id="start-btn">开始</button>
+      <button id="stop-btn">结束</button>
+    </div>
+  </div>
+
+  <div class="chart" id="chart2"></div>
+
+
+  <h2 id="ANDERSON">Anderson 局域化<a href="#top" style="font-size: 13px;">^回到目录^</a></h2>
+  <hr />
+  <p>
+    固体物理中的Bloch定理解决了完美晶格系统的本征态问题，基于此，人们可以解释金属和绝缘体之间的区别。不过，能带理论考虑的模型过于理想，忽略了电子间的相互作用和晶格本身的缺陷。对于电阻的生成机制，我们不得不考虑电子-声子散射、电子-缺陷散射等机制。<br />
+
+  杂质、缺陷浓度较低时，我们可以利用Boltzmann方程等方法来处理，半导体电子论告诉我们，杂质能在导带、价带附近形成的局域态，从而减少带隙，有利于导电。这里事实上点出了杂质、缺陷导致波函数出现局域化的行为。然而，当杂质、缺陷浓度达到上述浓度的10倍，甚至9倍时，产生散射的机制过多；同时，我们实际遇到的体系也大多充满了各种无序态。可见，我们需要更完善的理论来解释波函数的行为，特别是杂质、缺陷等随机势能的引入导致波函数从延展态过渡到局域化的过程。<br />
+
+
+  P. W. Anderson在他1958年的论文中指出随机势能项导致了波函数的局部化，即Anderson 局域化<a href="#REF">[2]</a>。这种机制成为金属-绝缘体转变（MIT）等领域的重要依据。<br />
+
+  考虑Anderson杂质模型
+
+  $$
+  \hat{H} =\sum _{i} \varepsilon _{i}\hat{c}_{i}^{\dagger }\hat{c}_{i} -V\sum _{< ij >}\left(\hat{c}_{i}^{\dagger }\hat{c}_{j} +h.c.\right)
+  $$
+  其中$\varepsilon_i$为无序杂质，满足$\langle\varepsilon_i\rangle=0,\ \langle{\varepsilon_i\varepsilon_j}\rangle=W\delta_{ij}$。系统无序程度由 $\frac{W}{V}$ 刻画。<br/>
+  进一步，Anderson指出，对于一维、二维系统，任意小的无序扰动 $\frac{W}{V}$ 都会引起局域化，因此一维和二维系统不存在金属态；对于三维系统，只有无序程度达到一定值时，才会出现局域化，因而三维系统存在金属-绝缘体转变。这可以通过引入如下的Thouless数来描述
+
+  $$
+  g(L)=\frac{2\hbar}{e^2}G(L)
+  $$
+  其中 $G(L)=1/R$ 为电导。定义重整化群的标度函数$\beta$
+
+  $$
+  \beta(\ln{g})=\frac{d\ln{g}}{d\ln{L}}
+  $$
+  $\beta>0$ 对应金属态，$\beta<0$ 对应绝缘态。考虑$\beta$重整化群流，如下图所示
+  </p>
+
+  <p style="text-align: center;">
+    <img src="./rg.png" alt="标度函数的重整化群流" id="img_rg">
+  </p>
+
+  <p>
+    由此可以看到，只有三维系统存在金属-绝缘体转变。<br/>
+    下面，我们通过在Kronig-Penney势中引入无序扰动，来模拟一维晶格的Anderson局域化。设置势能为
+
+    $$
+    V( x) =\begin{cases}
+    0, & 0< x\leq L_{w}\\
+    \text{random}, & L_{w} < x\leq a
+    \end{cases}
+    $$
+    <ul>
+      <li>单击“开始”按钮，程序将模拟无序势能中和周期性势能中的波函数演化。</li>
+      <li>对比两种情况下的波函数演化，可以观察到电子在一维无序系统中波函数在实空间局域化，而在周期性晶格中以Bloch波包形式传播。</li>
+      <li>调节无序程度（0~1），观察不同无序程度下的局域化。</li>
+    </ul>
+  </p>
+  <div class="tools">
+    <div>
+      <span>无序程度: </span>
+      <input type="text" id="ds" placeholder="范围(0~1)" value="0.9" />
+    </div>
+    <div>
+      <button id="start-btn2">开始</button>
+      <button id="stop-btn2">结束</button>
+    </div>
+  </div>
+
+  <div class="subchart" id="chart3_1"></div>
+  <div class="subchart" id="chart3_2"></div>
+
+  <h2 id="REF">参考文献<a href="#top" style="font-size: 13px;">^回到目录^</a></h2>
+  <hr/>
+  <ol>
+    <li>
+      Kronig R. De L., Penney W. G., Quantum mechanics of electrons in crystal lattices, <a href="https://doi.org/10.1098/rspa.1931.0019" target="_blank">Proc. R. Soc. Lond. A 130: 499-513</a> (1931).</li>
+    <li>P. W. Anderson, Absence of Diffusion in Certain Random Lattices, <a href="https://journals.aps.org/pr/abstract/10.1103/PhysRev.109.1492 " target="_blank">Phys. Rev. 109, 1492</a> (1958).</li>
+  </ol>
+
+
+  <div class="mask">加载中...</div>
+
+  <script src="bwp.js"></script>
+  <script src="anderson.js"></script>
+  <script src="kp_dispersion.js"></script>
+  <script src="chart1.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+body{
+  padding-left: 190px;
+  padding-right: 190px;
+  font-size: 19px;
+}
+
+.chart {
+  width: 1000px;
+  height: 500px;
+  padding-top: 30px;
+  margin: auto;
+  border: 2px solid #696969;
+}
+
+.subchart{
+  width: 1000px;
+  height: 300px;
+  padding-top: 30px;
+  margin: auto;
+  border: 2px solid #696969;
+}
+.titlebox{
+  color: #555555;
+  font-size: 25px;
+  /* width: 80%; */
+  margin: auto;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+}
+
+.titlebox > h3{
+  font-style: italic;
+  color: darkgray;
+  line-height:15px;
+}
+
+  button {
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 17px;
+  }
+
+  button:hover {
+    background: #eee;
+  }
+
+  input {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    transition: all 0.3s;
+    margin: auto;
+  }
+
+
+
+  .tools >*{  
+    margin: auto;
+    margin-top: 15px;
+  }
+
+  .tools > div {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .tools > div > span {
+    margin-left: 25px;
+  }
+  .tools > div > button{
+    margin-left: 50px;
+  }
+
+  #img_rg{
+    width: 300px;
+    height: 300px;
+  }
+
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    font-size: 2em;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
